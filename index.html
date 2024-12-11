@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go 聊天室</title>
+</head>
+<body>
+    <div id="chatbox"></div>
+    <input id="msg" type="text" />
+    <button onclick="sendMessage()">发送</button>
+
+    <script>
+        var ws = new WebSocket("ws://localhost:8080/ws");
+        ws.onmessage = function(event) {
+            var chatbox = document.getElementById('chatbox');
+            chatbox.innerHTML += event.data + "<br/>";
+        };
+
+        function sendMessage() {
+            var msg = document.getElementById("msg").value;
+            ws.send(msg);
+        }
+    </script>
+</body>
+</html>
